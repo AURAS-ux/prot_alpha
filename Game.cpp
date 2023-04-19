@@ -7,7 +7,6 @@ void Game::InitVars()
 	this->resourceUI = new UI("assets\\space age.ttf");
 	this->resourceUI->InnitText("Resource1:", RESOURCE_FONT_SIZE, sf::Color::White);
 	grid = new MainGrid();
-	strs = std::vector<Structure*>();
 	temp = nullptr;
 	//Variable innit End
 }
@@ -24,6 +23,9 @@ void Game::InitWindow(int width, int height, int bitsPerPixel, bool isFullScreen
 	{
 		this->window->create(this->videoMode, "PR_A", sf::Style::Titlebar);
 	}
+
+	iconImage.loadFromFile("assets\\images\\icons\\icon.png");
+	this->window->setIcon(sf::Vector2u(iconImage.getSize().x,iconImage.getSize().y),iconImage.getPixelsPtr());
 }
 
 bool Game::IsOpen()
@@ -61,10 +63,6 @@ void Game::DrawWindow()
 	//Custom objects to draw Begin
 	this->resourceUI->DrawText(this->window, sf::Vector2f(20, 20));
 	this->grid->MainGridDraw(this->window);
-	for (auto& s : strs)
-	{
-		s->DrawStructure(*this->window);
-	}
 	if(temp != nullptr)
 	this->temp->DrawStructure(*this->window);
 	//Custom objects to draw End
@@ -97,7 +95,7 @@ void Game::BuildStructure()
 			CELL_SIZE * std::round((sf::Mouse::getPosition().x) / CELL_SIZE) + (X_OFFSET * str->GetStructureShape()->getGlobalBounds().width),
 			CELL_SIZE * std::round((sf::Mouse::getPosition().y) / CELL_SIZE) + (Y_OFFSET * str->GetStructureShape()->getGlobalBounds().width)
 		);
-		//strs.push_back(str);
+
 		temp = std::move(str);
 	}
 
@@ -107,8 +105,5 @@ Game::~Game()
 {
 	this->grid->~MainGrid();
 	this->resourceUI->~UI();
-	std::cout << "Preparing to delete " << strs.size() << " entities\n";
-	for (const auto& s : strs)
-		s->~Structure();
 	std::cout << "Destructor for Game called" << std::endl;
 }

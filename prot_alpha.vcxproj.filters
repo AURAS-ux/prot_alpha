@@ -19,6 +19,12 @@
     <Filter Include="assets\fonts">
       <UniqueIdentifier>{af495268-8bdd-4a6a-a0dd-cd7da30fb965}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets\images">
+      <UniqueIdentifier>{e32b9624-f2a0-477a-96c0-f5edde63688d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\images\icons">
+      <UniqueIdentifier>{c3ca9e5a-61ef-4cca-a304-0ba98b3af7e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -66,5 +72,10 @@
     <ResourceCompile Include="prot_alpha.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\images\icons\icon.png">
+      <Filter>assets\images\icons</Filter>
+    </Image>
   </ItemGroup>
 </Project>

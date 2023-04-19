@@ -20,8 +20,8 @@ private:
 	sf::RenderWindow* window;
 	UI* resourceUI;
 	MainGrid* grid;
-	std::vector<Structure*> strs;
 	std::unique_ptr<Structure> temp;
+	sf::Image iconImage;
 
 	void InitVars();
 	void InitWindow(int,int,int,bool);

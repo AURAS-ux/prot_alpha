@@ -4,9 +4,9 @@ MainGrid::MainGrid()
 {
 	gridLines = std::vector<sf::RectangleShape*>();
 
-	for(int i=5;i<WIDTH-GRID_OFFSET;i+=CELL_SIZE)
+	for(int i=LEFT_OFFSET;i<WIDTH-GRID_OFFSET;i+=CELL_SIZE)
 	{
-		for(int j=140;j<HEIGHT-GRID_OFFSET;j+=CELL_SIZE)
+		for(int j=TOP_OFFSET;j<HEIGHT-GRID_OFFSET;j+=CELL_SIZE)
 		{
 			sf::RectangleShape* cell;
 			cell = new sf::RectangleShape(sf::Vector2f(CELL_SIZE, CELL_SIZE));
