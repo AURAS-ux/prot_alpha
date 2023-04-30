@@ -14,6 +14,7 @@ UI::UI(std::string path)
 
 UI::~UI()
 {
+	if(!SNOOZE)
 	std::cout << "Destructor for UI called" << std::endl;
 	this->text->~Text();
 	this->uiFont->~Font();

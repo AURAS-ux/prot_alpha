@@ -19,6 +19,7 @@ Structure::Structure(float width, float height)
 
 Structure::~Structure()
 {
+	if(!SNOOZE)
 	std::cout << "Structure destructor called"<<std::endl;
 	if(this != nullptr)
 	delete this->structureShape;

@@ -21,6 +21,7 @@ MainGrid::MainGrid()
 
 MainGrid::~MainGrid()
 {
+	if(!SNOOZE)
 	std::cout << "Called the Grid destructor" << std::endl;
 	for(const sf::RectangleShape* cell:gridLines)
 	{

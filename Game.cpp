@@ -91,10 +91,16 @@ void Game::BuildStructure()
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		std::unique_ptr<Structure> str = std::make_unique<Structure>(STRUCTURE_SIZE, STRUCTURE_SIZE);
-		str->SetStructurePosition(
-			CELL_SIZE * std::round((sf::Mouse::getPosition().x) / CELL_SIZE) + (X_OFFSET * str->GetStructureShape()->getGlobalBounds().width),
-			CELL_SIZE * std::round((sf::Mouse::getPosition().y) / CELL_SIZE) + (Y_OFFSET * str->GetStructureShape()->getGlobalBounds().width)
+		sf::Vector2f structure_position = sf::Vector2f(
+			CELL_SIZE * std::round((sf::Mouse::getPosition().x) / CELL_SIZE) + (X_OFFSET * str->GetStructureShape()->
+				getGlobalBounds().width),
+			CELL_SIZE * std::round((sf::Mouse::getPosition().y) / CELL_SIZE) + (Y_OFFSET * str->GetStructureShape()->
+				getGlobalBounds().width)
 		);
+		str->SetStructurePosition(std::clamp(static_cast<int>(structure_position.x),LEFT_OFFSET,
+		                                     WIDTH - X_RESTRAIN - GRID_OFFSET - static_cast<int>(str->GetStructureShape()->
+			                                     getPosition().x)), 
+		                          std::clamp(static_cast<int>(structure_position.y),TOP_OFFSET,HEIGHT-Y_RESTRAIN - static_cast<int>(str->GetStructureShape()->getGlobalBounds().height)));
 
 		temp = std::move(str);
 	}
@@ -105,5 +111,6 @@ Game::~Game()
 {
 	this->grid->~MainGrid();
 	this->resourceUI->~UI();
+	if(!SNOOZE)
 	std::cout << "Destructor for Game called" << std::endl;
 }
