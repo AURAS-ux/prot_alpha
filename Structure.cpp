@@ -19,8 +19,7 @@ Structure::Structure(float width, float height)
 
 Structure::~Structure()
 {
-	if(!SNOOZE)
-	std::cout << "Structure destructor called"<<std::endl;
+	Logger::Println("Structure destructor called");
 	if(this != nullptr)
 	delete this->structureShape;
 }
@@ -59,4 +58,14 @@ sf::RectangleShape* Structure::GetStructureShape()
 void Structure::RenderStructure(sf::RenderTarget* tr)
 {
 	tr->draw(*this->structureShape);
+}
+
+bool Structure::MouseIntersection(Structure* str,sf::Vector2i mousePosition)
+{
+	return str->structureShape->getGlobalBounds().contains(sf::Vector2f(mousePosition.x,mousePosition.y));
+}
+
+bool Structure::StrucutreIntersection(Structure* str1, Structure* str2)
+{
+	return (str1->GetStructureShape()->getGlobalBounds().findIntersection(str2->GetStructureShape()->getGlobalBounds())) != std::nullopt;
 }

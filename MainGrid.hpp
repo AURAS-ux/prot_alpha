@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include"SETTINGS.hpp"
-#include <iostream>
 /**
  * \brief Grid Gnereator
  */

@@ -1,5 +1,7 @@
 #include "MainGrid.hpp"
 
+#include "Logger.hpp"
+
 MainGrid::MainGrid()
 {
 	gridLines = std::vector<sf::RectangleShape*>();
@@ -21,8 +23,7 @@ MainGrid::MainGrid()
 
 MainGrid::~MainGrid()
 {
-	if(!SNOOZE)
-	std::cout << "Called the Grid destructor" << std::endl;
+	Logger::Println("Called the Grid destructor");
 	for(const sf::RectangleShape* cell:gridLines)
 	{
 		delete cell;

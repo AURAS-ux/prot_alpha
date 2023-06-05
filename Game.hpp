@@ -20,7 +20,7 @@ private:
 	sf::RenderWindow* window;
 	UI* resourceUI;
 	MainGrid* grid;
-	std::unique_ptr<Structure> temp;
+	std::vector<std::unique_ptr<Structure>> structures;
 	sf::Image iconImage;
 
 	void InitVars();
@@ -29,5 +29,7 @@ private:
 	void DrawWindow();
 	void PollEvents();
 	void BuildStructure();
+	void DestroyStructure(std::vector<std::unique_ptr<Structure>>&);
+	bool CheckStructureInterection(std::unique_ptr<Structure>& ,std::vector<std::unique_ptr<Structure>>&);
 };
 

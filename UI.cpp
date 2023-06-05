@@ -1,5 +1,7 @@
 #include "UI.hpp"
 
+#include "Logger.hpp"
+
 UI::UI()
 {
 
@@ -14,8 +16,7 @@ UI::UI(std::string path)
 
 UI::~UI()
 {
-	if(!SNOOZE)
-	std::cout << "Destructor for UI called" << std::endl;
+	Logger::Println("Destructor for UI called");
 	this->text->~Text();
 	this->uiFont->~Font();
 }
@@ -30,8 +31,7 @@ void UI::LoadFontResource(std::string path)
 {
 	if(!uiFont->loadFromFile(path))
 	{
-		sf::err();
-		std::cerr << "No font at path< " << path;
+		Logger::PrintError("No font at path< "+*path.c_str());
 	}
 }
 
@@ -47,3 +47,4 @@ void UI::SetText(std::string content)
 {
 	this->text->setString(content);
 }
+

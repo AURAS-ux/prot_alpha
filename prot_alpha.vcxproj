@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGrid.cpp" />
     <ClCompile Include="Structure.cpp" />
@@ -141,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.hpp" />
+    <ClInclude Include="Logger.hpp" />
     <ClInclude Include="MainGrid.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SETTINGS.hpp" />
