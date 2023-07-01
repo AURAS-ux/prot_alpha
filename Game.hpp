@@ -4,6 +4,7 @@
 #include "UI.hpp"
 #include "MainGrid.hpp"
 #include "Structure.hpp"
+#include "TextureManager.hpp"
 #include <memory>
 
 class Game
@@ -18,10 +19,20 @@ private:
 	sf::Event ev;
 	sf::VideoMode videoMode;
 	sf::RenderWindow* window;
+	sf::ContextSettings settings;
 	UI* resourceUI;
 	MainGrid* grid;
 	std::vector<std::unique_ptr<Structure>> structures;
 	sf::Image iconImage;
+	UI* gameUI;
+	std::string fontPath;
+	float res1Score;
+	float scoreMultiplyer;
+	std::vector<std::unique_ptr<sf::Texture>> spaceShipTextures;
+	sf::RectangleShape* selectedStructure;
+	sf::Angle rotationAngle;
+	std::unique_ptr<sf::Texture> backgroundTexture;
+	std::unique_ptr<sf::Sprite> backgroundSprite;
 
 	void InitVars();
 	void InitWindow(int,int,int,bool);
@@ -31,5 +42,7 @@ private:
 	void BuildStructure();
 	void DestroyStructure(std::vector<std::unique_ptr<Structure>>&);
 	bool CheckStructureInterection(std::unique_ptr<Structure>& ,std::vector<std::unique_ptr<Structure>>&);
+	void IncreaseScore(float&,float&, std::vector<std::unique_ptr<Structure>>&);
+	void GetSelectedStructure();
 };
 

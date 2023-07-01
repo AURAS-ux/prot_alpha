@@ -4,10 +4,24 @@ void Game::InitVars()
 {
 	this->ev = sf::Event();
 	//Variable innit Begin
-	this->resourceUI = new UI("assets\\space age.ttf");
+	this->res1Score = 0;
+	this->scoreMultiplyer = 0.005f;
+	this->fontPath = "assets\\space age.ttf";
+	this->resourceUI = new UI(fontPath);
 	this->resourceUI->InnitText("Resource1:", RESOURCE_FONT_SIZE, sf::Color::White);
-	grid = new MainGrid();
-	structures = std::vector<std::unique_ptr<Structure>>();
+	this->gameUI = new UI(fontPath);
+	this->grid = new MainGrid();
+	this->structures = std::vector<std::unique_ptr<Structure>>();
+	this->spaceShipTextures = std::vector<std::unique_ptr<sf::Texture>>(5);
+	TextureManager::GetSpritesVector(std::vector<std::string>{"assets\\images\\Spaceships\\03\\Spaceship_03_NAVY BLUE.png",
+		"assets\\images\\Spaceships\\04\\Spaceship_04_RED.png", "assets\\images\\Spaceships\\05\\Spaceship_05_ORANGE.png",
+		"assets\\images\\Spaceships\\06\\Spaceship_06_BLUE.png", "assets\\images\\Spaceships\\02\\Spaceship_02_GREEN.png"}, spaceShipTextures);
+	this->settings.antialiasingLevel = 8;
+	this->rotationAngle = sf::degrees(90);
+	this->backgroundTexture = std::make_unique<sf::Texture>();
+	this->backgroundSprite = std::make_unique<sf::Sprite>();
+	TextureManager::GetSprite("assets\\images\\background\\Space Background.png", backgroundTexture);
+ 	this->backgroundSprite->setTexture(*backgroundTexture.get());
 	//Variable innit End
 }
 
@@ -17,7 +31,7 @@ void Game::InitWindow(int width, int height, int bitsPerPixel, bool isFullScreen
 	this->videoMode = sf::VideoMode(sf::Vector2u(width, height), bitsPerPixel);
 	if (isFullScreen)
 	{
-		this->window->create(this->videoMode, "PR_A", sf::Style::Fullscreen);
+		this->window->create(this->videoMode, "PR_A", sf::Style::Fullscreen,settings);
 	}
 	else
 	{
@@ -35,7 +49,6 @@ bool Game::IsOpen()
 	return this->window->isOpen();
 }
 
-
 void Game::Update()
 {
 	while (this->IsOpen())
@@ -43,7 +56,10 @@ void Game::Update()
 		this->DrawWindow();
 		this->PollEvents();
 		//Costum updates Begin
-		
+		this->gameUI->InnitText(std::to_string(static_cast<int>(res1Score)), RESOURCE_FONT_SIZE, sf::Color::White);
+		this->IncreaseScore(res1Score, scoreMultiplyer, structures);
+		gameUI->SetSelectionIcons(spaceShipTextures);
+		this->GetSelectedStructure();
 		//Costum updates End
 	}
 }
@@ -64,13 +80,18 @@ void Game::DrawWindow()
 {
 	this->window->clear();
 	//Custom objects to draw Begin
+	this->window->draw(*backgroundSprite.get());
 	this->resourceUI->DrawText(this->window, sf::Vector2f(20, 20));
+	this->gameUI->DrawText(this->window, sf::Vector2f(resourceUI->getText()->getPosition().x + resourceUI->getText()->getGlobalBounds().width, 20));
 	this->grid->MainGridDraw(this->window);
 	for(auto& temp:structures)
 	{
 		if(temp != nullptr)
-		temp->DrawStructure(*this->window);
+		{
+			temp->DrawStructure(*this->window);
+		}
 	}
+	gameUI->DrawSelectionMenu(*this->window);
 	//Custom objects to draw End
 	this->window->display();
 }
@@ -85,9 +106,9 @@ void Game::PollEvents()
 			this->window->~RenderWindow();
 		}
 		//Custom poll for events Begin
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->grid->IsMouseInGrid(sf::Vector2f(sf::Mouse::getPosition())))
 			this->BuildStructure();
-		else if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+		else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->grid->IsMouseInGrid(sf::Vector2f(sf::Mouse::getPosition())))
 			this->DestroyStructure(this->structures);
 
 		//Custom poll for events End
@@ -97,6 +118,10 @@ void Game::PollEvents()
 void Game::BuildStructure()
 {
 	std::unique_ptr<Structure> str = std::make_unique<Structure>(STRUCTURE_SIZE, STRUCTURE_SIZE);
+	if(selectedStructure != nullptr)
+		str->GetStructureShape()->setTexture(selectedStructure->getTexture());
+	else return;
+	str->GetStructureShape()->rotate(sf::degrees(90));
 	sf::Vector2f structure_position = sf::Vector2f(
 		CELL_SIZE * std::round((sf::Mouse::getPosition()                    .x) / CELL_SIZE) + (X_OFFSET * str->GetStructureShape()->
 			getGlobalBounds()                                               .width),
@@ -141,9 +166,25 @@ bool Game::CheckStructureInterection(std::unique_ptr<Structure>& object,std::vec
 	return  positionAvailable;
 }
 
+void Game::IncreaseScore(float& score,float& scoreMultiplayer, std::vector<std::unique_ptr<Structure>>& strs)
+{
+	score += scoreMultiplayer * strs.size();
+}
+
+void Game::GetSelectedStructure()
+{
+	if (this->gameUI->CheckSelectionMenuClick(sf::Mouse::getPosition()) != nullptr)
+	{
+		selectedStructure = this->gameUI->CheckSelectionMenuClick(sf::Mouse::getPosition());
+	}
+}
+
 Game::~Game()
 {
 	this->grid->~MainGrid();
 	this->resourceUI->~UI();
+	this->gameUI->~UI();
+	if(selectedStructure != nullptr)
+	this->selectedStructure->~RectangleShape();
 	Logger::Println("Destructor for Game called");
 }

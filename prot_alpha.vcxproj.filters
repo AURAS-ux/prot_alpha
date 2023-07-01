@@ -45,6 +45,9 @@
     <ClCompile Include="Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SETTINGS.hpp">
@@ -68,6 +71,9 @@
     <ClInclude Include="Logger.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TextureManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Font Include="assets\space age.ttf">
@@ -82,6 +88,24 @@
   <ItemGroup>
     <Image Include="assets\images\icons\icon.png">
       <Filter>assets\images\icons</Filter>
+    </Image>
+    <Image Include="assets\images\background\Space Background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\Spaceships\06\Spaceship_06_BLUE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\Spaceships\05\Spaceship_05_ORANGE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\Spaceships\04\Spaceship_04_RED.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\Spaceships\03\Spaceship_03_NAVY BLUE.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\images\Spaceships\02\Spaceship_02_GREEN.png">
+      <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
 </Project>

@@ -10,6 +10,7 @@
 #define GRID_OFFSET 120
 #define LEFT_OFFSET 5
 #define TOP_OFFSET 140
+#define SHOW_GRID 0
 inline void print_snooze_status() { SNOOZE ? printf("Snoozing console output;") : printf("Console output is on"); printf("\n"); }
 #if WIDTH==1920 && HEIGHT == 1080
 inline void print_size() { printf("window size: %d,%d\n", WIDTH, HEIGHT); }

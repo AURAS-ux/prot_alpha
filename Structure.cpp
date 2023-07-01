@@ -8,7 +8,8 @@ void Structure::InnitVariables(float width, float height)
 void Structure::InitStructure()
 {
 	this->structureShape = new sf::RectangleShape(this->structureSize);
-	this->structureShape->setFillColor(sf::Color::Red);
+	this->structureShape->setFillColor(sf::Color::White);
+	this->structureShape->setOrigin(sf::Vector2f(this->structureShape->getGlobalBounds().top, this->structureShape->getGlobalBounds().height));
 }
 
 Structure::Structure(float width, float height)

@@ -137,6 +137,7 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGrid.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
@@ -146,6 +147,7 @@
     <ClInclude Include="MainGrid.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SETTINGS.hpp" />
+    <ClInclude Include="TextureManager.hpp" />
     <ClInclude Include="Structure.hpp" />
     <ClInclude Include="UI.hpp" />
   </ItemGroup>
@@ -156,7 +158,13 @@
     <ResourceCompile Include="prot_alpha.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\images\background\Space Background.png" />
     <Image Include="assets\images\icons\icon.png" />
+    <Image Include="assets\images\Spaceships\02\Spaceship_02_GREEN.png" />
+    <Image Include="assets\images\Spaceships\03\Spaceship_03_NAVY BLUE.png" />
+    <Image Include="assets\images\Spaceships\04\Spaceship_04_RED.png" />
+    <Image Include="assets\images\Spaceships\05\Spaceship_05_ORANGE.png" />
+    <Image Include="assets\images\Spaceships\06\Spaceship_06_BLUE.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
