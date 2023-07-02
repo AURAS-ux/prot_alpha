@@ -1,6 +1,6 @@
 #include"Game.hpp"
 #include "SETTINGS.hpp"
-
+#include "FileManager.hpp"
 int main()
 {
     Game* gameWindow = new Game(WIDTH, HEIGHT, BITSPERPIXEL,true);

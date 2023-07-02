@@ -1,5 +1,7 @@
 #include "Game.hpp"
 
+#include "FileManager.hpp"
+
 void Game::InitVars()
 {
 	this->ev = sf::Event();
@@ -13,14 +15,17 @@ void Game::InitVars()
 	this->grid = new MainGrid();
 	this->structures = std::vector<std::unique_ptr<Structure>>();
 	this->spaceShipTextures = std::vector<std::unique_ptr<sf::Texture>>(5);
-	TextureManager::GetSpritesVector(std::vector<std::string>{"assets\\images\\Spaceships\\03\\Spaceship_03_NAVY BLUE.png",
-		"assets\\images\\Spaceships\\04\\Spaceship_04_RED.png", "assets\\images\\Spaceships\\05\\Spaceship_05_ORANGE.png",
-		"assets\\images\\Spaceships\\06\\Spaceship_06_BLUE.png", "assets\\images\\Spaceships\\02\\Spaceship_02_GREEN.png"}, spaceShipTextures);
+	spaceShipTexturesNames.push_back(FileManager::GetFilePath("Spaceship_03_NAVY BLUE.png"));
+	spaceShipTexturesNames.push_back(FileManager::GetFilePath("Spaceship_05_ORANGE.png"));
+	spaceShipTexturesNames.push_back(FileManager::GetFilePath("Spaceship_02_GREEN.png"));
+	spaceShipTexturesNames.push_back(FileManager::GetFilePath("Spaceship_04_RED.png"));
+	spaceShipTexturesNames.push_back(FileManager::GetFilePath("Spaceship_06_BLUE.png"));
+	TextureManager::GetSpritesVector(spaceShipTexturesNames, spaceShipTextures);
 	this->settings.antialiasingLevel = 8;
 	this->rotationAngle = sf::degrees(90);
 	this->backgroundTexture = std::make_unique<sf::Texture>();
 	this->backgroundSprite = std::make_unique<sf::Sprite>();
-	TextureManager::GetSprite("assets\\images\\background\\Space Background.png", backgroundTexture);
+	TextureManager::GetSprite(FileManager::GetFilePath("Space Background.png"), backgroundTexture);
  	this->backgroundSprite->setTexture(*backgroundTexture.get());
 	//Variable innit End
 }
@@ -38,7 +43,8 @@ void Game::InitWindow(int width, int height, int bitsPerPixel, bool isFullScreen
 		this->window->create(this->videoMode, "PR_A", sf::Style::Titlebar);
 	}
 
-	iconImage.loadFromFile("assets\\images\\icons\\icon.png");
+	if (!iconImage.loadFromFile(FileManager::GetFilePath("icon.png")))
+		Logger::PrintError("error loading icon", 0);
 	this->window->setIcon(sf::Vector2u(iconImage.getSize().x,iconImage.getSize().y),iconImage.getPixelsPtr());
 
 

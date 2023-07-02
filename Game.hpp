@@ -33,6 +33,7 @@ private:
 	sf::Angle rotationAngle;
 	std::unique_ptr<sf::Texture> backgroundTexture;
 	std::unique_ptr<sf::Sprite> backgroundSprite;
+	std::vector<std::string> spaceShipTexturesNames;
 
 	void InitVars();
 	void InitWindow(int,int,int,bool);

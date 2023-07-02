@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FileManager.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Logger.hpp" />
     <ClInclude Include="MainGrid.hpp" />
@@ -158,13 +160,8 @@
     <ResourceCompile Include="prot_alpha.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="assets\images\background\Space Background.png" />
     <Image Include="assets\images\icons\icon.png" />
-    <Image Include="assets\images\Spaceships\02\Spaceship_02_GREEN.png" />
-    <Image Include="assets\images\Spaceships\03\Spaceship_03_NAVY BLUE.png" />
-    <Image Include="assets\images\Spaceships\04\Spaceship_04_RED.png" />
-    <Image Include="assets\images\Spaceships\05\Spaceship_05_ORANGE.png" />
-    <Image Include="assets\images\Spaceships\06\Spaceship_06_BLUE.png" />
+    <Image Include="assets\images\icons\prot_alpha.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
