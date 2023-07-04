@@ -7,11 +7,12 @@ class Structure
 private:
 	sf::RectangleShape* structureShape;
 	sf::Vector2f structureSize;
+	uint8_t structureType=0;
 
-	void InnitVariables(float,float);
+	void InnitVariables(float,float, uint8_t);
 	void InitStructure();
 public:
-	Structure(float,float);
+	Structure(float,float, uint8_t);
 	~Structure();
 	Structure(const Structure& structure);
 
@@ -23,4 +24,5 @@ public:
 	void RenderStructure(sf::RenderTarget*);
 	static bool MouseIntersection(Structure* ,sf::Vector2i);
 	static bool StrucutreIntersection(Structure* str1, Structure* str2);
+	uint8_t GetStructureType();
 };

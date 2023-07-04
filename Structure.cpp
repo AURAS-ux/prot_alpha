@@ -1,8 +1,9 @@
 #include "Structure.hpp"
 
-void Structure::InnitVariables(float width, float height)
+void Structure::InnitVariables(float width, float height, uint8_t type)
 {
 	this->structureSize = sf::Vector2f(width, height);
+	this->structureType = type;
 }
 
 void Structure::InitStructure()
@@ -12,9 +13,9 @@ void Structure::InitStructure()
 	this->structureShape->setOrigin(sf::Vector2f(this->structureShape->getGlobalBounds().top, this->structureShape->getGlobalBounds().height));
 }
 
-Structure::Structure(float width, float height)
+Structure::Structure(float width, float height, uint8_t type = 0)
 {
-	this->InnitVariables(width, height);
+	this->InnitVariables(width, height,type);
 	this->InitStructure();
 }
 
@@ -69,4 +70,9 @@ bool Structure::MouseIntersection(Structure* str,sf::Vector2i mousePosition)
 bool Structure::StrucutreIntersection(Structure* str1, Structure* str2)
 {
 	return (str1->GetStructureShape()->getGlobalBounds().findIntersection(str2->GetStructureShape()->getGlobalBounds())) != std::nullopt;
+}
+
+uint8_t Structure::GetStructureType()
+{
+	return this->structureType;
 }

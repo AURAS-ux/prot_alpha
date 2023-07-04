@@ -29,7 +29,7 @@ private:
 	float res1Score;
 	float scoreMultiplyer;
 	std::vector<std::unique_ptr<sf::Texture>> spaceShipTextures;
-	sf::RectangleShape* selectedStructure;
+	UI::SelectedStructure selectedStructure;
 	sf::Angle rotationAngle;
 	std::unique_ptr<sf::Texture> backgroundTexture;
 	std::unique_ptr<sf::Sprite> backgroundSprite;

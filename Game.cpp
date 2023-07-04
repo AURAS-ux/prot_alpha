@@ -123,9 +123,9 @@ void Game::PollEvents()
 
 void Game::BuildStructure()
 {
-	std::unique_ptr<Structure> str = std::make_unique<Structure>(STRUCTURE_SIZE, STRUCTURE_SIZE);
-	if(selectedStructure != nullptr)
-		str->GetStructureShape()->setTexture(selectedStructure->getTexture());
+	std::unique_ptr<Structure> str = std::make_unique<Structure>(STRUCTURE_SIZE, STRUCTURE_SIZE,selectedStructure.structureType);
+	if(selectedStructure.selectedShape != nullptr)
+		str->GetStructureShape()->setTexture(selectedStructure.selectedShape->getTexture());
 	else return;
 	str->GetStructureShape()->rotate(sf::degrees(90));
 	sf::Vector2f structure_position = sf::Vector2f(
@@ -174,12 +174,20 @@ bool Game::CheckStructureInterection(std::unique_ptr<Structure>& object,std::vec
 
 void Game::IncreaseScore(float& score,float& scoreMultiplayer, std::vector<std::unique_ptr<Structure>>& strs)
 {
-	score += scoreMultiplayer * strs.size();
+	int nrOfStructures = 0;
+	for(auto& str : strs)
+	{
+		if(str.get()->GetStructureType() == 0)
+		{
+			nrOfStructures++;
+		}
+	}
+	score += scoreMultiplayer * nrOfStructures;
 }
 
 void Game::GetSelectedStructure()
 {
-	if (this->gameUI->CheckSelectionMenuClick(sf::Mouse::getPosition()) != nullptr)
+	if (this->gameUI->CheckSelectionMenuClick(sf::Mouse::getPosition()).selectedShape != nullptr)
 	{
 		selectedStructure = this->gameUI->CheckSelectionMenuClick(sf::Mouse::getPosition());
 	}
@@ -190,7 +198,7 @@ Game::~Game()
 	this->grid->~MainGrid();
 	this->resourceUI->~UI();
 	this->gameUI->~UI();
-	if(selectedStructure != nullptr)
-	this->selectedStructure->~RectangleShape();
+	if(selectedStructure.selectedShape != nullptr)
+	this->selectedStructure.selectedShape->~RectangleShape();
 	Logger::Println("Destructor for Game called");
 }

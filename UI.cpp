@@ -74,17 +74,19 @@ void UI::DrawSelectionMenu(sf::RenderTarget& tr)
 	}
 }
 
-sf::RectangleShape* UI::CheckSelectionMenuClick(sf::Vector2i mouse)
+UI::SelectedStructure UI::CheckSelectionMenuClick(sf::Vector2i mouse)
 {
-	sf::RectangleShape* clickedShape = nullptr;
+	SelectedStructure selectedStructure;
+	selectedStructure.selectedShape = nullptr;
 	for(int i=0;i<selectionMenu.size();i++)
 	{
 		if(selectionMenu.at(i)->getGlobalBounds().contains(sf::Vector2f(mouse.x,mouse.y)) && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			clickedShape = selectionMenu.at(i);
+			selectedStructure.selectedShape = selectionMenu.at(i);
+			selectedStructure.structureType = i;
 		}
 	}
-	return clickedShape;
+	return selectedStructure;
 }
 
 void UI::SetSelectionIcons(std::vector<std::unique_ptr<sf::Texture>>& iconTexture)
