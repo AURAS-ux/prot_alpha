@@ -27,6 +27,11 @@ void Game::InitVars()
 	this->backgroundSprite = std::make_unique<sf::Sprite>();
 	TextureManager::GetSprite(FileManager::GetFilePath("Space Background.png"), backgroundTexture);
  	this->backgroundSprite->setTexture(*backgroundTexture.get());
+	this->deltaTime = time.GetDeltaTime();
+	srand(deltaTime);
+	this->structureBullets = std::vector<sf::CircleShape>();
+	this->bulletTexture = std::make_unique<sf::Texture>();
+	TextureManager::GetSprite(FileManager::GetFilePath("laser_01.png"), bulletTexture);
 	//Variable innit End
 }
 
@@ -66,6 +71,9 @@ void Game::Update()
 		this->IncreaseScore(res1Score, scoreMultiplyer, structures);
 		gameUI->SetSelectionIcons(spaceShipTextures);
 		this->GetSelectedStructure();
+
+		this->deltaTime = time.GetDeltaTime();
+		this->HandleBulletsUpdate();
 		//Costum updates End
 	}
 }
@@ -98,6 +106,10 @@ void Game::DrawWindow()
 		}
 	}
 	gameUI->DrawSelectionMenu(*this->window);
+	for(sf::CircleShape bullet:structureBullets)
+	{
+		this->window->draw(bullet);
+	}
 	//Custom objects to draw End
 	this->window->display();
 }
@@ -136,10 +148,10 @@ void Game::BuildStructure()
 	);
 	str->SetStructurePosition(std::clamp(static_cast<int>(structure_position.x),LEFT_OFFSET,
 	                                     WIDTH - X_RESTRAIN - GRID_OFFSET - static_cast<int>(str->GetStructureShape()->
-		                                     getPosition()                  .x)), 
+		                                     getPosition().x)), 
 	                          std::clamp(static_cast<int>(structure_position.y),TOP_OFFSET,
 	                                     HEIGHT - Y_RESTRAIN - static_cast<int>(str->GetStructureShape()->
-		                                     getGlobalBounds()              .height)));
+		                                     getGlobalBounds().height)));
 	if(CheckStructureInterection(str,structures))
 	{
 		structures.push_back(std::move(str));
@@ -191,6 +203,33 @@ void Game::GetSelectedStructure()
 	{
 		selectedStructure = this->gameUI->CheckSelectionMenuClick(sf::Mouse::getPosition());
 	}
+}
+
+bool OutScreenBullet(sf::CircleShape bullet)
+{
+	return bullet.getPosition().x > WIDTH;
+}
+
+void Game::CleanBullets()
+{
+	for(sf::CircleShape& bullet : structureBullets)
+	{
+		structureBullets.erase(
+			std::remove_if(structureBullets.begin(), structureBullets.end(), OutScreenBullet),
+			structureBullets.end());
+	}
+}
+
+void Game::HandleBulletsUpdate()
+{
+	for (auto& str : structures)
+		str.get()->UpdateBullets(deltaTime, structureBullets);
+	for (auto& bullet : structureBullets)
+	{
+		bullet.setTexture(bulletTexture.get());
+		bullet.move(sf::Vector2f(1000 * deltaTime, 0));
+	}
+	this->CleanBullets();
 }
 
 Game::~Game()

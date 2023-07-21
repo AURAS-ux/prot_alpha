@@ -1,4 +1,6 @@
 #include "Structure.hpp"
+#include "FileManager.hpp"
+#include "TextureManager.hpp"
 
 void Structure::InnitVariables(float width, float height, uint8_t type)
 {
@@ -11,6 +13,17 @@ void Structure::InitStructure()
 	this->structureShape = new sf::RectangleShape(this->structureSize);
 	this->structureShape->setFillColor(sf::Color::White);
 	this->structureShape->setOrigin(sf::Vector2f(this->structureShape->getGlobalBounds().top, this->structureShape->getGlobalBounds().height));
+}
+
+
+void Structure::Shoot(std::vector<sf::CircleShape>& bullets)
+{
+	sf::CircleShape bullet =  sf::CircleShape(20.f);
+	bullet.setFillColor(SetBulletColor());
+	float centerPosX = this->structureShape->getGlobalBounds().left + this->structureShape->getGlobalBounds().width/2;
+	float centerPosY = this->structureShape->getGlobalBounds().top + this->structureShape->getGlobalBounds().height/2 - 25;
+	bullet.setPosition(sf::Vector2f(centerPosX,centerPosY));
+	bullets.push_back(bullet);
 }
 
 Structure::Structure(float width, float height, uint8_t type = 0)
@@ -75,4 +88,25 @@ bool Structure::StrucutreIntersection(Structure* str1, Structure* str2)
 uint8_t Structure::GetStructureType()
 {
 	return this->structureType;
+}
+
+void Structure::UpdateBullets(float dt, std::vector<sf::CircleShape>& bullets)
+{
+	if(rand()%SHOT_PROBABILITY == 1 && structureType != 0) this->Shoot(bullets);
+}
+
+sf::Color Structure::SetBulletColor()
+{
+	switch (structureType)
+	{
+	case 1:
+		return sf::Color(238, 137, 0, 255);
+	case 2:
+		return sf::Color(69, 191, 85, 255);
+	case 3:
+		return sf::Color(155, 17, 41, 255);
+	case 4:
+		return sf::Color(145, 201, 232, 255);
+	default: sf::Color::White;
+	}
 }

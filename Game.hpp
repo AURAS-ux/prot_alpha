@@ -34,6 +34,11 @@ private:
 	std::unique_ptr<sf::Texture> backgroundTexture;
 	std::unique_ptr<sf::Sprite> backgroundSprite;
 	std::vector<std::string> spaceShipTexturesNames;
+	sf::Clock clock;
+	float deltaTime;
+	Time time = Time(clock);
+	std::vector<sf::CircleShape> structureBullets;
+	std::unique_ptr<sf::Texture> bulletTexture;
 
 	void InitVars();
 	void InitWindow(int,int,int,bool);
@@ -45,5 +50,7 @@ private:
 	bool CheckStructureInterection(std::unique_ptr<Structure>& ,std::vector<std::unique_ptr<Structure>>&);
 	void IncreaseScore(float&,float&, std::vector<std::unique_ptr<Structure>>&);
 	void GetSelectedStructure();
+	void CleanBullets();
+	void HandleBulletsUpdate();
 };
 

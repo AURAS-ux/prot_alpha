@@ -8,5 +8,6 @@ int main()
     print_snooze_status();
     gameWindow->Update();
     gameWindow->~Game();
+    //TODO improve the bullets, replace auto 
     return 0;
 }

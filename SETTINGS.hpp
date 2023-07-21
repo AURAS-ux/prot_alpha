@@ -20,3 +20,5 @@ inline void print_size() { printf("window size: %d,%d\n", WIDTH, HEIGHT); }
 #define X_RESTRAIN 29
 #define Y_RESTRAIN 62
 #endif
+#define To_String std::to_string
+#define SHOT_PROBABILITY 1000

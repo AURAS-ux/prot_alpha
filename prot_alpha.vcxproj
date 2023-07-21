@@ -140,6 +140,7 @@
     <ClCompile Include="MainGrid.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Structure.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,7 @@
     <ClInclude Include="SETTINGS.hpp" />
     <ClInclude Include="TextureManager.hpp" />
     <ClInclude Include="Structure.hpp" />
+    <ClInclude Include="Time.hpp" />
     <ClInclude Include="UI.hpp" />
   </ItemGroup>
   <ItemGroup>
