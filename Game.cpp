@@ -110,6 +110,7 @@ void Game::DrawWindow()
 	{
 		this->window->draw(bullet);
 	}
+	this->grid->DrawMargins(this->window);
 	//Custom objects to draw End
 	this->window->display();
 }

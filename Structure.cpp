@@ -18,7 +18,7 @@ void Structure::InitStructure()
 
 void Structure::Shoot(std::vector<sf::CircleShape>& bullets)
 {
-	sf::CircleShape bullet =  sf::CircleShape(20.f);
+	sf::CircleShape bullet =  sf::CircleShape(40.f);
 	bullet.setFillColor(SetBulletColor());
 	float centerPosX = this->structureShape->getGlobalBounds().left + this->structureShape->getGlobalBounds().width/2;
 	float centerPosY = this->structureShape->getGlobalBounds().top + this->structureShape->getGlobalBounds().height/2 - 25;

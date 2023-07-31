@@ -36,7 +36,8 @@ void UI::LoadFontResource(std::string path)
 {
 	if(!uiFont->loadFromFile(path))
 	{
-		Logger::PrintError(("No font at path< "+path).c_str());
+		Logger::PrintError("no font found at path:");
+		Logger::Print(path.c_str());
 	}
 }
 

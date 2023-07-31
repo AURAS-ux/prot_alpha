@@ -1,6 +1,10 @@
+#include <iostream>
+
 #include"Game.hpp"
 #include "SETTINGS.hpp"
 #include "FileManager.hpp"
+#include "Logger.hpp"
+
 int main()
 {
     Game* gameWindow = new Game(WIDTH, HEIGHT, BITSPERPIXEL,true);
@@ -8,6 +12,5 @@ int main()
     print_snooze_status();
     gameWindow->Update();
     gameWindow->~Game();
-    //TODO improve the bullets, replace auto 
     return 0;
 }

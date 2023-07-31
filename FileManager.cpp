@@ -35,7 +35,7 @@ std::string FileManager::GetFilePath(std::string fileName)
 			}
 			else if (fileSearchCounter == 1000)
 			{
-				Logger::PrintError("Exceeded number of searches after 1000 tries", 0);
+				Logger::Print("Exceeded number of searches after 1000 tries", 0);
 				retriesLeft = false;
 				return "Nullpath returned";
 			}

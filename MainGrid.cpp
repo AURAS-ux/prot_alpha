@@ -1,7 +1,7 @@
 #include "MainGrid.hpp"
-
+#include "FileManager.hpp"
 #include <iostream>
-
+#include "TextureManager.hpp"
 #include "Logger.hpp"
 
 MainGrid::MainGrid()
@@ -14,13 +14,14 @@ MainGrid::MainGrid()
 		{
 			sf::RectangleShape* cell;
 			cell = new sf::RectangleShape(sf::Vector2f(CELL_SIZE, CELL_SIZE));
-			cell->setFillColor(sf::Color::Transparent);
-			cell->setOutlineThickness(1.5f);
-			cell->setOutlineColor(sf::Color::White);
 			cell->setPosition(sf::Vector2f(static_cast<float>(i), static_cast<float>(j)));
+			cell->setFillColor(sf::Color::Transparent);
+			cell->setOutlineThickness(0);
 			gridLines.push_back(cell);
 		}
 	}
+
+	InitMargins();
 }
 
 MainGrid::~MainGrid()
@@ -88,4 +89,43 @@ bool MainGrid::IsMouseInGrid(sf::Vector2f pos)
 		return true;
 	}
 	else return false;
+}
+
+void MainGrid::DrawMargins(sf::RenderTarget* tr)
+{
+	tr->draw(*topMargin.get());
+	tr->draw(*bottomMargin.get());
+}
+
+void MainGrid::InitMargins()
+{
+	topMargin = std::make_unique<sf::RectangleShape>();
+	bottomMargin = std::make_unique<sf::RectangleShape>();
+	marginTexture = std::make_unique<sf::Texture>();
+	topMargin->setPosition(sf::Vector2f(this->GetGridBounds().find("StartX")->second, this->GetGridBounds().find("StartY")->second));
+	topMargin->setSize(sf::Vector2f(this->GetGridBounds().find("Width")->second, 10));
+	TextureManager::GetSprite(FileManager::GetFilePath("61.png"), marginTexture);
+	marginTexture->setRepeated(true);
+	topMargin->setTexture(marginTexture.get());
+
+	bottomMargin->setPosition(sf::Vector2f(this->GetGridBounds().find("StartX")->second, this->GetGridBounds().find("StartY")->second + this->GetGridBounds().find("Height")->second + CELL_SIZE));
+	bottomMargin->setSize(topMargin.get()->getSize());
+	bottomMargin->setTexture(marginTexture.get());
+}
+
+void MainGrid::CheckContent(Structure* str)
+{
+	for (sf::RectangleShape* cell : gridLines)
+	{
+		if (cell->getGlobalBounds().findIntersection(str->GetStructureShape()->getGlobalBounds()))
+		{
+			cell->setFillColor(sf::Color::Transparent);
+			cell->setOutlineThickness(1.5f);
+			cell->setOutlineColor(sf::Color::White);
+		}else
+		{
+			cell->setFillColor(sf::Color::Transparent);
+			cell->setOutlineThickness(0);
+		}
+	}
 }
