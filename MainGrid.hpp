@@ -17,7 +17,9 @@ public:
 	void PrintGridBounds();
 	bool IsMouseInGrid(sf::Vector2f);
 	void DrawMargins(sf::RenderTarget*);
-	void CheckContent(Structure*);
+	bool CheckContent(sf::RectangleShape* ,std::vector<std::unique_ptr<Structure>>&);
+	std::vector<sf::RectangleShape*> GetGridLines();
+	bool HighlightCurrentCell(sf::RectangleShape*,sf::Vector2f);
 private:
 	std::vector<sf::RectangleShape*> gridLines;
 	std::unique_ptr<sf::RectangleShape> topMargin;

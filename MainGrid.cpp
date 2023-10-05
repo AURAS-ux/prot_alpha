@@ -16,7 +16,8 @@ MainGrid::MainGrid()
 			cell = new sf::RectangleShape(sf::Vector2f(CELL_SIZE, CELL_SIZE));
 			cell->setPosition(sf::Vector2f(static_cast<float>(i), static_cast<float>(j)));
 			cell->setFillColor(sf::Color::Transparent);
-			cell->setOutlineThickness(0);
+			cell->setOutlineThickness(1.5f);
+			cell->setOutlineColor(sf::Color(44, 24, 14, 70));
 			gridLines.push_back(cell);
 		}
 	}
@@ -113,19 +114,29 @@ void MainGrid::InitMargins()
 	bottomMargin->setTexture(marginTexture.get());
 }
 
-void MainGrid::CheckContent(Structure* str)
+bool MainGrid::CheckContent(sf::RectangleShape* cell, std::vector<std::unique_ptr<Structure>>& structures)
 {
-	for (sf::RectangleShape* cell : gridLines)
+	bool foundCollision = false;
+	for(const std::unique_ptr<Structure>& str: structures)
 	{
 		if (cell->getGlobalBounds().findIntersection(str->GetStructureShape()->getGlobalBounds()))
 		{
-			cell->setFillColor(sf::Color::Transparent);
-			cell->setOutlineThickness(1.5f);
-			cell->setOutlineColor(sf::Color::White);
-		}else
-		{
-			cell->setFillColor(sf::Color::Transparent);
-			cell->setOutlineThickness(0);
+			foundCollision = true; 
 		}
 	}
+	return foundCollision;
+}
+
+std::vector<sf::RectangleShape*> MainGrid::GetGridLines()
+{
+	return this->gridLines;
+}
+
+bool MainGrid::HighlightCurrentCell(sf::RectangleShape* cell,sf::Vector2f mousePos)
+{
+	if (cell->getGlobalBounds().contains(mousePos))
+	{
+		return true;
+	}
+	else return false;
 }

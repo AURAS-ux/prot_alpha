@@ -133,21 +133,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainGrid.cpp" />
+    <ClCompile Include="RandomEngine.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Structure.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Enemy.hpp" />
+    <ClInclude Include="EnemyManager.hpp" />
     <ClInclude Include="FileManager.hpp" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="Logger.hpp" />
     <ClInclude Include="MainGrid.hpp" />
+    <ClInclude Include="RandomEngine.hpp" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SETTINGS.hpp" />
     <ClInclude Include="TextureManager.hpp" />

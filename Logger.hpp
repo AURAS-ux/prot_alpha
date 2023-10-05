@@ -4,11 +4,11 @@
 #include "SETTINGS.hpp"
 #include <iostream>
 #include <filesystem>
+#include <ctime>
 
 
 class Logger
 {
-
 public:
 	Logger() = delete;
 
@@ -35,21 +35,21 @@ template <typename T>
 void Logger::Print(const T& message, int snoozeStatus)
 {
 	if (!snoozeStatus)
-		std::cout << "INFO:" << message;
+		std::cout  << "INFO:" << message;
 }
 
 template <typename T>
 void Logger::Println(const T& message, int snoozeStatus)
 {
 	if (!snoozeStatus)
-		std::cout << "INFO:" << message << "\n";
+		std::cout <<"INFO:" << message << "\n";
 }
 
 template <typename T>
 void Logger::PrintError(const T& errorMessage, int snoozeStatus)
 {
 	if (!snoozeStatus)
-		std::cout << "ERROR:" << errorMessage << "\n";
+		std::cout  << "ERROR:" << errorMessage << "\n";
 }
 
 template <typename T>

@@ -10,7 +10,7 @@ void Game::InitVars()
 	this->scoreMultiplyer = 0.005f;
 	this->fontPath = "assets\\space age.ttf";
 	this->resourceUI = new UI(fontPath);
-	this->resourceUI->InnitText("Resource1:", RESOURCE_FONT_SIZE, sf::Color::White);
+	this->resourceUI->InnitText("Energy:", RESOURCE_FONT_SIZE, sf::Color::White);
 	this->gameUI = new UI(fontPath);
 	this->grid = new MainGrid();
 	this->structures = std::vector<std::unique_ptr<Structure>>();
@@ -28,10 +28,16 @@ void Game::InitVars()
 	TextureManager::GetSprite(FileManager::GetFilePath("Space Background.png"), backgroundTexture);
  	this->backgroundSprite->setTexture(*backgroundTexture.get());
 	this->deltaTime = time.GetDeltaTime();
-	srand(deltaTime);
+	srand(static_cast<unsigned int>(deltaTime));
 	this->structureBullets = std::vector<sf::CircleShape>();
 	this->bulletTexture = std::make_unique<sf::Texture>();
 	TextureManager::GetSprite(FileManager::GetFilePath("laser_01.png"), bulletTexture);
+	for(int i = 128;i<grid->GetGridLines().size();i++)
+	{
+		spawnerPositions.push_back(grid->GetGridLines().at(i)->getPosition());
+		spawnerCount++;
+	}
+	enemyManager = std::make_unique<EnemyManager>(spawnerCount,spawnerPositions);
 	//Variable innit End
 }
 
@@ -74,6 +80,9 @@ void Game::Update()
 
 		this->deltaTime = time.GetDeltaTime();
 		this->HandleBulletsUpdate();
+		this->HandleGridDrawing();
+		/*IN IMPLEMENTATION*/ UpdateEnemies();
+		this->enemyManager->MoveEnemies(deltaTime);
 		//Costum updates End
 	}
 }
@@ -111,6 +120,7 @@ void Game::DrawWindow()
 		this->window->draw(bullet);
 	}
 	this->grid->DrawMargins(this->window);
+	this->enemyManager->DrawEnemies(this->window);
 	//Custom objects to draw End
 	this->window->display();
 }
@@ -231,6 +241,30 @@ void Game::HandleBulletsUpdate()
 		bullet.move(sf::Vector2f(1000 * deltaTime, 0));
 	}
 	this->CleanBullets();
+}
+
+void Game::HandleGridDrawing()
+{
+	for (sf::RectangleShape*& cell : grid->GetGridLines())
+	{
+		if (this->grid->CheckContent(cell, structures))
+		{
+			cell->setFillColor(sf::Color(44, 24, 14, 70));
+		}
+		else cell->setFillColor(sf::Color::Transparent);
+
+		if(this->grid->HighlightCurrentCell(cell,sf::Vector2f(sf::Mouse::getPosition())))
+		{
+			cell->setFillColor(sf::Color(222, 227, 223, 80));
+		}
+	}
+	
+
+}
+
+void Game::UpdateEnemies()
+{
+	enemyManager->UpdateEnemyManager(ENEMY_SPAWNRATE,structureBullets,*grid);
 }
 
 Game::~Game()

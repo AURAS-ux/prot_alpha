@@ -6,6 +6,8 @@
 #include "Structure.hpp"
 #include "TextureManager.hpp"
 #include <memory>
+#include "Enemy.hpp"
+#include "EnemyManager.hpp"
 
 class Game
 {
@@ -39,6 +41,9 @@ private:
 	Time time = Time(clock);
 	std::vector<sf::CircleShape> structureBullets;
 	std::unique_ptr<sf::Texture> bulletTexture;
+	std::vector<sf::Vector2f> spawnerPositions;
+	int spawnerCount;
+	std::unique_ptr<EnemyManager> enemyManager;
 
 	void InitVars();
 	void InitWindow(int,int,int,bool);
@@ -52,5 +57,7 @@ private:
 	void GetSelectedStructure();
 	void CleanBullets();
 	void HandleBulletsUpdate();
+	void HandleGridDrawing();
+	void UpdateEnemies();
 };
 

@@ -1,6 +1,6 @@
 #pragma once
 #include <stdio.h>
-#define SNOOZE 1
+#define SNOOZE 0
 #define WIDTH 1920
 #define HEIGHT 1080
 #define BITSPERPIXEL 32
@@ -10,7 +10,7 @@
 #define GRID_OFFSET 120
 #define LEFT_OFFSET 5
 #define TOP_OFFSET 140
-#define SHOW_GRID 0
+#define SHOW_GRID 1
 inline void print_snooze_status() { SNOOZE ? printf("Snoozing console output;") : printf("Console output is on"); printf("\n"); }
 #if WIDTH==1920 && HEIGHT == 1080
 inline void print_size() { printf("window size: %d,%d\n", WIDTH, HEIGHT); }
@@ -21,3 +21,6 @@ inline void print_size() { printf("window size: %d,%d\n", WIDTH, HEIGHT); }
 #define Y_RESTRAIN 62
 #endif
 #define SHOT_PROBABILITY 1000
+#define ENEMY_SPAWNRATE 3000
+#define ENEMYHITBOX_XOFFSET 80
+#define ENEMYHITBOX_YOFFSET 20
